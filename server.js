@@ -5,11 +5,19 @@ const bodyParser = require('body-parser')
 
 const AuthRoute = require('./routes/auth')
 
-mongoose.connect('mongodb://localhost:27017/objective', {
+const uri = process.env.MONGODB_URI
+
+mongoose.connect(
+  'mongodb+srv://alexnguyen:phonghoang98@cluster0.pomxs.mongodb.net/ObjectiveDB',
+  {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-})
+    useUnifiedTopology: true
+  }
+)
+
+var db = mongoose.connection
+
+db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 const app = express()
 
@@ -19,12 +27,8 @@ app.use(bodyParser.json())
 
 const PORT = process.env.PORT || 3000
 
-app.get("/", (req, res) => {
-    res.send('Hello Phong')
-})
-
 app.use('/api', AuthRoute)
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`)
+  console.log(`Server is running on port ${PORT}`)
 })
