@@ -141,7 +141,7 @@ router.post('/login', (req, res) => {
             .then(result => {
               if (result) {
                 let accessToken = jwt.sign({ email: email }, 'access', {
-                  expiresIn: '30s'
+                  expiresIn: '1h'
                 })
                 let refreshToken = jwt.sign({ email: email }, 'refresh', {
                   expiresIn: '7d'
