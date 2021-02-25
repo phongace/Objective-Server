@@ -9,6 +9,24 @@ const User = require('./../models/user')
 // Password handler
 const bcrypt = require('bcrypt')
 
+function auth(req, res, next) {
+  let token = req.headers['authorization']
+  token = token.split(' ')[1] // Access token
+
+  jwt.verify(token, 'access', (err, user) => {
+    if (!err) {
+      req.user = user
+      next()
+    } else {
+      return res.status(403).json({ message: 'User not authenticated' })
+    }
+  })
+}
+
+router.post('/protected', auth, (req, res) => {
+  res.send('Inside protected route')
+})
+
 // Register
 router.post('/register', (req, res) => {
   let { name, email, password } = req.body
@@ -18,21 +36,25 @@ router.post('/register', (req, res) => {
 
   if (name === '' || email === '' || password === '') {
     res.json({
+      code: '-1',
       status: 'FAILED',
       message: 'Empty input fields!'
     })
   } else if (!/^[a-zA-Z]*$/.test(name)) {
     res.json({
+      code: '-1',
       status: 'FAILED',
       message: 'Invalid name entered!'
     })
   } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
     res.json({
+      code: '-1',
       status: 'FAILED',
       message: 'Invalid email entered!'
     })
   } else if (password.length < 8) {
     res.json({
+      code: '-1',
       status: 'FAILED',
       message: 'Password is too short!'
     })
@@ -43,6 +65,7 @@ router.post('/register', (req, res) => {
         if (result.length) {
           // A user already exist
           res.json({
+            code: '-1',
             status: 'FAILED',
             message: 'User with the provided email already exists'
           })
@@ -63,13 +86,15 @@ router.post('/register', (req, res) => {
                 .save()
                 .then(result => {
                   res.json({
-                    status: 'SUCESS',
+                    code: '0',
+                    status: 'SUCCESS',
                     message: 'Register sucessful',
                     data: result
                   })
                 })
                 .catch(err => {
                   res.json({
+                    code: '-1',
                     status: 'FAILED',
                     message: 'An error occurred while saving user account!'
                   })
@@ -77,6 +102,7 @@ router.post('/register', (req, res) => {
             })
             .catch(err => {
               res.json({
+                code: '-1',
                 status: 'FAILED',
                 message: 'An error occurred while hashing password!'
               })
@@ -86,6 +112,7 @@ router.post('/register', (req, res) => {
       .catch(err => {
         console.log(err)
         res.json({
+          code: '-1',
           status: 'FAILED',
           message: 'An error occurred while checking for existing user!'
         })
@@ -113,17 +140,23 @@ router.post('/login', (req, res) => {
             .compare(password, hashedPass)
             .then(result => {
               if (result) {
-                let token = jwt.sign({ email: email }, 'verySecretValue', {
-                  expiresIn: '1h'
+                let accessToken = jwt.sign({ email: email }, 'access', {
+                  expiresIn: '30s'
+                })
+                let refreshToken = jwt.sign({ email: email }, 'refresh', {
+                  expiresIn: '7d'
                 })
                 res.json({
+                  code: '0',
                   status: 'SUCCESS',
                   message: 'Login successful',
-                  token,
+                  accessToken,
+                  refreshToken,
                   data: data
                 })
               } else {
                 res.json({
+                  code: '-1',
                   status: 'FAILED',
                   message: 'Invalid password!'
                 })
@@ -131,12 +164,14 @@ router.post('/login', (req, res) => {
             })
             .catch(err => {
               res.json({
+                code: '-1',
                 status: 'FAILED',
                 message: 'An error occurred while compating password!'
               })
             })
         } else {
           res.json({
+            code: '-1',
             status: 'FAILED',
             message: 'Invalid credentials supplied!'
           })
@@ -144,6 +179,7 @@ router.post('/login', (req, res) => {
       })
       .catch(err => {
         res.json({
+          code: '-1',
           status: 'FAILED',
           message: 'User not exists!'
         })
