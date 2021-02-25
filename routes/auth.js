@@ -37,25 +37,21 @@ router.post('/register', (req, res) => {
   if (name === '' || email === '' || password === '') {
     res.json({
       code: '-1',
-      status: 'FAILED',
       message: 'Empty input fields!'
     })
   } else if (!/^[a-zA-Z]*$/.test(name)) {
     res.json({
       code: '-1',
-      status: 'FAILED',
       message: 'Invalid name entered!'
     })
   } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
     res.json({
       code: '-1',
-      status: 'FAILED',
       message: 'Invalid email entered!'
     })
   } else if (password.length < 8) {
     res.json({
       code: '-1',
-      status: 'FAILED',
       message: 'Password is too short!'
     })
   } else {
@@ -66,7 +62,6 @@ router.post('/register', (req, res) => {
           // A user already exist
           res.json({
             code: '-1',
-            status: 'FAILED',
             message: 'User with the provided email already exists'
           })
         } else {
@@ -87,7 +82,6 @@ router.post('/register', (req, res) => {
                 .then(result => {
                   res.json({
                     code: '0',
-                    status: 'SUCCESS',
                     message: 'Register sucessful',
                     data: result
                   })
@@ -95,7 +89,6 @@ router.post('/register', (req, res) => {
                 .catch(err => {
                   res.json({
                     code: '-1',
-                    status: 'FAILED',
                     message: 'An error occurred while saving user account!'
                   })
                 })
@@ -103,7 +96,6 @@ router.post('/register', (req, res) => {
             .catch(err => {
               res.json({
                 code: '-1',
-                status: 'FAILED',
                 message: 'An error occurred while hashing password!'
               })
             })
@@ -113,7 +105,6 @@ router.post('/register', (req, res) => {
         console.log(err)
         res.json({
           code: '-1',
-          status: 'FAILED',
           message: 'An error occurred while checking for existing user!'
         })
       })
@@ -128,7 +119,6 @@ router.post('/login', (req, res) => {
 
   if (email == '' || password == '') {
     res.json({
-      status: 'FAILED',
       message: 'Empty credentials supplied!'
     })
   } else {
@@ -148,16 +138,16 @@ router.post('/login', (req, res) => {
                 })
                 res.json({
                   code: '0',
-                  status: 'SUCCESS',
                   message: 'Login successful',
-                  accessToken,
-                  refreshToken,
+                  tokenObject: {
+                    accessToken,
+                    refreshToken
+                  },
                   data: data
                 })
               } else {
                 res.json({
                   code: '-1',
-                  status: 'FAILED',
                   message: 'Invalid password!'
                 })
               }
@@ -165,14 +155,12 @@ router.post('/login', (req, res) => {
             .catch(err => {
               res.json({
                 code: '-1',
-                status: 'FAILED',
                 message: 'An error occurred while compating password!'
               })
             })
         } else {
           res.json({
             code: '-1',
-            status: 'FAILED',
             message: 'Invalid credentials supplied!'
           })
         }
@@ -180,7 +168,6 @@ router.post('/login', (req, res) => {
       .catch(err => {
         res.json({
           code: '-1',
-          status: 'FAILED',
           message: 'User not exists!'
         })
       })
