@@ -141,7 +141,7 @@ router.post('/login', (req, res) => {
                   accessToken,
                   refreshToken
                 },
-                data: { data }
+                data: { name: data[0].name }
               })
             } else {
               res.json({
