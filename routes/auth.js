@@ -141,7 +141,7 @@ router.post('/login', (req, res) => {
                   accessToken,
                   refreshToken
                 },
-                data: data
+                data: JSON.stringify(data)
               })
             } else {
               res.json({
