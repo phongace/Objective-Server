@@ -141,8 +141,9 @@ router.post('/login', (req, res) => {
                   accessToken,
                   refreshToken
                 },
-                data: JSON.stringify(data)
+                data: data
               })
+              console.log(data)
             } else {
               res.json({
                 status: 'FAILED',
