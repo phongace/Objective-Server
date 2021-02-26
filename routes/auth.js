@@ -36,23 +36,23 @@ router.post('/register', (req, res) => {
 
   if (name === '' || email === '' || password === '') {
     res.json({
-      code: '-1',
+      status: 'FAILED',
       message: 'Empty input fields!'
     })
   } else if (!/^[a-zA-Z]*$/.test(name)) {
     res.json({
-      code: '-1',
-      message: 'Invalid name entered!'
+      status: 'FAILED',
+      message: 'Tên không hợp lệ'
     })
   } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
     res.json({
-      code: '-1',
-      message: 'Invalid email entered!'
+      status: 'FAILED',
+      message: 'Email không hợp lệ'
     })
   } else if (password.length < 8) {
     res.json({
-      code: '-1',
-      message: 'Password is too short!'
+      status: 'FAILED',
+      message: 'Mật khẩu phải có ít nhất 8 kí tự'
     })
   } else {
     // Checking if user already exists
@@ -61,8 +61,8 @@ router.post('/register', (req, res) => {
         if (result.length) {
           // A user already exist
           res.json({
-            code: '-1',
-            message: 'User with the provided email already exists'
+            status: 'FAILED',
+            message: 'Email đã tồn tại'
           })
         } else {
           // Try to create new user
@@ -81,21 +81,21 @@ router.post('/register', (req, res) => {
                 .save()
                 .then(result => {
                   res.json({
-                    code: '0',
+                    status: 'SUCCESS',
                     message: 'Register sucessful',
                     data: result
                   })
                 })
                 .catch(err => {
                   res.json({
-                    code: '-1',
+                    status: 'FAILED',
                     message: 'An error occurred while saving user account!'
                   })
                 })
             })
             .catch(err => {
               res.json({
-                code: '-1',
+                status: 'FAILED',
                 message: 'An error occurred while hashing password!'
               })
             })
@@ -104,8 +104,8 @@ router.post('/register', (req, res) => {
       .catch(err => {
         console.log(err)
         res.json({
-          code: '-1',
-          message: 'An error occurred while checking for existing user!'
+          status: 'FAILED',
+          message: 'Email đã tồn tại'
         })
       })
   }
@@ -126,49 +126,41 @@ router.post('/login', (req, res) => {
       .then(data => {
         if (data.length) {
           const hashedPass = data[0].password
-          bcrypt
-            .compare(password, hashedPass)
-            .then(result => {
-              if (result) {
-                let accessToken = jwt.sign({ email: email }, 'access', {
-                  expiresIn: '1h'
-                })
-                let refreshToken = jwt.sign({ email: email }, 'refresh', {
-                  expiresIn: '7d'
-                })
-                res.json({
-                  code: '0',
-                  message: 'Login successful',
-                  tokenObject: {
-                    accessToken,
-                    refreshToken
-                  },
-                  data: data
-                })
-              } else {
-                res.json({
-                  code: '-1',
-                  message: 'Invalid password!'
-                })
-              }
-            })
-            .catch(err => {
-              res.json({
-                code: '-1',
-                message: 'An error occurred while compating password!'
+          bcrypt.compare(password, hashedPass).then(result => {
+            if (result) {
+              let accessToken = jwt.sign({ email: email }, 'access', {
+                expiresIn: '1h'
               })
-            })
+              let refreshToken = jwt.sign({ email: email }, 'refresh', {
+                expiresIn: '7d'
+              })
+              res.json({
+                status: 'SUCCESS',
+                message: 'Login successful',
+                tokenObject: {
+                  accessToken,
+                  refreshToken
+                },
+                data: data
+              })
+            } else {
+              res.json({
+                status: 'FAILED',
+                message: 'Sai mật khẩu'
+              })
+            }
+          })
         } else {
           res.json({
-            code: '-1',
-            message: 'Invalid credentials supplied!'
+            status: 'FAILED',
+            message: 'Sai tên đăng nhập hoặc mật khẩu'
           })
         }
       })
       .catch(err => {
         res.json({
-          code: '-1',
-          message: 'User not exists!'
+          status: 'FAILED',
+          message: 'Tài khoản không tồn tại'
         })
       })
   }
