@@ -137,11 +137,12 @@ router.post('/login', (req, res) => {
               res.json({
                 status: 'SUCCESS',
                 message: 'Login successful',
-                tokenObject: {
+                data: {
                   accessToken,
-                  refreshToken
-                },
-                data: { name: data[0].name }
+                  refreshToken,
+                  userName: data[0].name,
+                  userMail: data[0].email
+                }
               })
             } else {
               res.json({
