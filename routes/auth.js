@@ -113,8 +113,7 @@ router.post('/register', (req, res) => {
 
 // Login
 router.post('/login', (req, res) => {
-  let { name, email, password } = req.body
-  name = name.trim()
+  let { email, password } = req.body
   email = email.trim()
   password = password.trim()
 
@@ -138,10 +137,10 @@ router.post('/login', (req, res) => {
               res.json({
                 status: 'SUCCESS',
                 message: 'Login successful',
-                // tokenObject: {
-                //   accessToken,
-                //   refreshToken
-                // },
+                tokenObject: {
+                  accessToken,
+                  refreshToken
+                },
                 data: data
               })
             } else {
