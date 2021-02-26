@@ -144,9 +144,9 @@ router.post('/login', (req, res) => {
                 },
                 data: {
                   accessToken,
-                  refreshToken,
-                  name,
-                  email
+                  refreshToken
+                  // name,
+                  // email
                 }
               })
             } else {
