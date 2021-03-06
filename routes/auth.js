@@ -9,7 +9,7 @@ const User = require('./../models/user')
 // Password handler
 const bcrypt = require('bcrypt')
 
-export function auth(req, res, next) {
+export default function auth(req, res, next) {
     let token = req.headers['authorization']
     token = token.split(' ')[1] // Access token
 
