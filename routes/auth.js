@@ -9,7 +9,7 @@ const User = require('./../models/user')
 // Password handler
 const bcrypt = require('bcrypt')
 
-export default function auth(req, res, next) {
+function auth(req, res, next) {
     let token = req.headers['authorization']
     token = token.split(' ')[1] // Access token
 
@@ -167,4 +167,4 @@ router.post('/login', (req, res) => {
     }
 })
 
-module.exports = router
+module.exports = { router, auth }

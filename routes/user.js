@@ -1,9 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const { default: auth } = require('./auth')
-
 
 const User = require('./../models/user')
+const { auth } = require('./auth')
 
 router.post('/updateInfo', auth, (req, res) => {
     User.findOne({ _id: req.body.id }, (err, doc) => {
