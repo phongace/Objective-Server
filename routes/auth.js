@@ -167,4 +167,5 @@ router.post('/login', (req, res) => {
     }
 })
 
-module.exports = { router, auth }
+module.exports = router
+module.exports.auth = auth
