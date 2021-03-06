@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const cors = require('cors')
 
 const AuthRoute = require('./routes/auth')
+const UserRoute = require('./routes/user')
 
 const uri = process.env.MONGODB_URI
 
@@ -35,6 +36,7 @@ app.use(express.json())
 const PORT = process.env.PORT || 3000
 
 app.use('/api', AuthRoute)
+app.use('/api/user', UserRoute)
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
