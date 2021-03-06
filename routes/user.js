@@ -12,3 +12,5 @@ router.post('/updateInfo', auth, (req, res) => {
             doc.save(callback)
     })
 })
+
+module.exports = router
