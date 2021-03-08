@@ -8,22 +8,9 @@ const User = require('./../models/user')
 
 // Password handler
 const bcrypt = require('bcrypt')
+const { checkAuth } = require('../middleware/checkAuth')
 
-export function checkAuth(req, res, next) {
-  let token = req.headers['authorization']
-  token = token.split(' ')[1] // Access token
-
-  jwt.verify(token, 'access', (err, user) => {
-    if (!err) {
-      req.user = user
-      next()
-    } else {
-      return res.status(403).json({ message: 'User not authenticated' })
-    }
-  })
-}
-
-router.post('/protected', auth, (req, res) => {
+router.post('/protected', checkAuth, (req, res) => {
   res.send('Inside protected route')
 })
 

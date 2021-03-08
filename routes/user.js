@@ -1,12 +1,11 @@
 const express = require('express')
 const router = express.Router()
+const { checkAuth } = require('../middleware/checkAuth')
 
 const User = require('./../models/user')
-const { checkAuth } = require('./auth')
 
 router.put('/updateInfo/:id', checkAuth, (req, res) => {
   const { id } = req.params
-  //   const { name, gender, birthday } = req.body
   User.findOneAndUpdate(
     { _id: id },
     {
@@ -17,7 +16,7 @@ router.put('/updateInfo/:id', checkAuth, (req, res) => {
       if (err) {
         res.send(err.message)
       } else {
-        return res.send(result)
+        return res.json('Updated')
       }
     }
   )
