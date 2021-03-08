@@ -1,14 +1,24 @@
 const express = require('express')
 const router = express.Router()
-const { auth } = require('./auth')
 
 const User = require('./../models/user')
+const { checkAuth } = require('./auth')
 
-router.post('/updateInfo', auth, (req, res) => {
-    User.findOne({ _id: req.body.id }, (err, doc) => {
-        doc.name = req.body.name,
-            doc.gender = req.body.gender,
-
-            doc.save(callback)
-    })
+router.put('/updateInfo/:id', checkAuth, (req, res) => {
+  const { id } = req.params
+  //   const { name, gender, birthday } = req.body
+  User.findOneAndUpdate(
+    { _id: id },
+    {
+      $set: req.body
+    },
+    { new: true },
+    (err, result) => {
+      if (err) {
+        res.send(err.message)
+      } else {
+        return res.send(result)
+      }
+    }
+  )
 })
