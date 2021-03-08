@@ -28,16 +28,16 @@ router.put('/updateInfo/:id', checkAuth, (req, res) => {
 
 router.delete('/delete/:id', checkAuth, (req, res) => {
   const { id } = req.params
-  const deleted = User.find(u => u._id === id)
-  if (deleted) {
-    User = User.filter(u => u._id !== id)
-    res.json(deleted)
-  } else {
-    res.json({
-      status: 'FAILED',
-      message: 'User you are looking for does not exist'
-    })
-  }
+  User.deleteOne({ _id: id }, (err, result) => {
+    if (err) {
+      res.send(err.message)
+    } else {
+      return res.json({
+        status: 'SUCCESS',
+        message: 'Delete successful'
+      })
+    }
+  })
 })
 
 module.exports = router
