@@ -21,3 +21,5 @@ router.put('/updateInfo/:id', checkAuth, (req, res) => {
     }
   )
 })
+
+module.exports = router

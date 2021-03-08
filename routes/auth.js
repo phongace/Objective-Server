@@ -1,14 +1,13 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
-
 const router = express.Router()
+const { checkAuth } = require('../middleware/checkAuth')
 
 // mongodb user model
 const User = require('./../models/user')
 
 // Password handler
 const bcrypt = require('bcrypt')
-const { checkAuth } = require('../middleware/checkAuth')
 
 router.post('/protected', checkAuth, (req, res) => {
   res.send('Inside protected route')
