@@ -15,20 +15,14 @@ router.post('/protected', checkAuth, (req, res) => {
 
 // Register
 router.post('/register', (req, res) => {
-  let { name, email, password } = req.body
-  name = name.trim()
+  let { email, password } = req.body
   email = email.trim()
   password = password.trim()
 
-  if (name === '' || email === '' || password === '') {
+  if (email === '' || password === '') {
     res.json({
       status: 'FAILED',
       message: 'Empty input fields!'
-    })
-  } else if (!/^[a-zA-Z]*$/.test(name)) {
-    res.json({
-      status: 'FAILED',
-      message: 'Tên không hợp lệ'
     })
   } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
     res.json({
@@ -58,7 +52,6 @@ router.post('/register', (req, res) => {
             .hash(password, saltRounds)
             .then(hashedPass => {
               const newUser = new User({
-                name,
                 email,
                 password: hashedPass
               })
