@@ -121,7 +121,8 @@ router.post('/login', (req, res) => {
                   accessToken,
                   refreshToken,
                   userName: data[0].name,
-                  userMail: data[0].email
+                  userMail: data[0].email,
+                  dataa: data[0]
                 }
               })
             } else {
