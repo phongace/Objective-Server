@@ -120,9 +120,10 @@ router.post('/login', (req, res) => {
                 data: {
                   accessToken,
                   refreshToken,
-                  userName: data[0].name,
-                  userMail: data[0].email,
-                  dataa: data[0]
+                  id: data[0]._id,
+                  name: data[0].name,
+                  email: data[0].email,
+                  isNewUser: data[0].isNewUser
                 }
               })
             } else {
