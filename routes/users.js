@@ -4,9 +4,9 @@ const { checkAuth } = require('../middleware/checkAuth')
 
 const User = require('../models/user')
 
-router.get('/:email', checkAuth, (req, res) => {
+router.get('/', checkAuth, (req, res) => {
   const { email } = req.params
-  User.findOne({ email }, (err, user) => {
+  User.findOne({ email: 'phong98@gmail.comm' }, (err, user) => {
     if (err) {
       res.json({
         status: 'FAILED'
