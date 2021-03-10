@@ -1,12 +1,15 @@
 const express = require('express')
+const { token } = require('morgan')
 const router = express.Router()
 const { checkAuth } = require('../middleware/checkAuth')
 
 const User = require('../models/user')
 
 router.get('/', checkAuth, (req, res) => {
-  const { email } = req.params
-  User.findOne({ email: 'phong98@gmail.comm' }, (err, user) => {
+  const email = JSON.parse(
+    atob(req.headers['authorization'].split('.')[1].email)
+  )
+  User.findOne({ email }, (err, user) => {
     if (err) {
       res.json({
         status: 'FAILED'
