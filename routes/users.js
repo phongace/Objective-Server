@@ -23,7 +23,6 @@ router.get('/', checkAuth, (req, res) => {
       }
     })
   }
-  return res.send(500)
 })
 
 router.put('/updateInfo', checkAuth, (req, res) => {
@@ -52,7 +51,6 @@ router.put('/updateInfo', checkAuth, (req, res) => {
       }
     )
   }
-  return res.send(500)
 })
 
 router.delete('/', checkAuth, (req, res) => {
