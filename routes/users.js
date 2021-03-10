@@ -24,42 +24,56 @@ router.get('/', checkAuth, (req, res) => {
       }
     })
   }
+  return res.send(500)
 })
 
 router.put('/updateInfo', checkAuth, (req, res) => {
-  const { email } = req.body
-  User.findOneAndUpdate(
-    { email },
-    {
-      $set: req.body
-    },
-    { new: true },
-    (err, result) => {
+  if (req.headers && req.headers.authorization) {
+    var decoded = jwt.verify(
+      req.headers['authorization'].split(' ')[1],
+      'access'
+    )
+    var email = decoded.email
+    User.findOneAndUpdate(
+      { email },
+      {
+        $set: req.body
+      },
+      { new: true },
+      (err, result) => {
+        if (err) {
+          res.send(err.message)
+        } else {
+          return res.json({
+            status: 'SUCCESS',
+            message: 'Update successful',
+            data: result
+          })
+        }
+      }
+    )
+  }
+  return res.send(500)
+})
+
+router.delete('/', checkAuth, (req, res) => {
+  if (req.headers && req.headers.authorization) {
+    var decoded = jwt.verify(
+      req.headers['authorization'].split(' ')[1],
+      'access'
+    )
+    var email = decoded.email
+    User.deleteOne({ email }, (err, result) => {
       if (err) {
         res.send(err.message)
       } else {
         return res.json({
           status: 'SUCCESS',
-          message: 'Update successful',
-          data: result
+          message: 'Delete successful'
         })
       }
-    }
-  )
-})
-
-router.delete('/delete/:id', checkAuth, (req, res) => {
-  const { id } = req.params
-  User.deleteOne({ _id: id }, (err, result) => {
-    if (err) {
-      res.send(err.message)
-    } else {
-      return res.json({
-        status: 'SUCCESS',
-        message: 'Delete successful'
-      })
-    }
-  })
+    })
+  }
 })
 
 module.exports = router
