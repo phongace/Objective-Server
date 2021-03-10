@@ -18,7 +18,7 @@ router.get('/', checkAuth, (req, res) => {
   })
 })
 
-router.put('/updateInfo/:id', checkAuth, (req, res) => {
+router.put('/updateInfo', checkAuth, (req, res) => {
   const { id } = req.params
   User.findOneAndUpdate(
     { _id: id },
