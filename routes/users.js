@@ -6,11 +6,11 @@ const User = require('../models/user')
 
 router.get('/userInfo', checkAuth, (req, res) => {
   const { id } = req.params
-  User.findOne({ _id: id }, (err, result) => {
+  User.findOne({ _id: id }, (err, user) => {
     if (err) {
       throw err
     }
-    res.render('account', { ...result })
+    res.json(user)
   })
 })
 
