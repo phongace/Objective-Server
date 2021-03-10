@@ -19,9 +19,9 @@ router.get('/', checkAuth, (req, res) => {
 })
 
 router.put('/updateInfo', checkAuth, (req, res) => {
-  const { id } = req.params
+  const { email } = req.params
   User.findOneAndUpdate(
-    { _id: id },
+    { email },
     {
       $set: req.body
     },
