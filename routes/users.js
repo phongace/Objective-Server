@@ -7,7 +7,8 @@ const { checkAuth } = require('../middleware/checkAuth')
 const User = require('../models/user')
 
 router.get('/', checkAuth, (req, res) => {
-  const email = jwt.decode(req.headers['authorization'].split('.')[1]).email
+  const token = jwt.decode(req.headers['authorization'].split('.')[1])
+  const email = token.email
   User.findOne({ email }, (err, user) => {
     if (err) {
       res.json({
