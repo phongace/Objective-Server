@@ -9,7 +9,7 @@ const User = require('../models/user')
 router.get('/', checkAuth, (req, res) => {
   const token = jwt.decode(req.headers['authorization'].split('.')[1])
   console.log(token)
-  const email = token.payload.email
+  const email = token.data.email
   User.findOne({ email }, (err, user) => {
     if (err) {
       res.json({
