@@ -5,8 +5,8 @@ const { checkAuth } = require('../middleware/checkAuth')
 const User = require('../models/user')
 
 router.get('/userInfo', checkAuth, (req, res) => {
-  const { id } = req.params
-  User.findOne({ _id: id }, (err, user) => {
+  const { email } = req.body
+  User.findOne({ email }, (err, user) => {
     if (err) {
       throw err
     }
