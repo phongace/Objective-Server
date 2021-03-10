@@ -8,6 +8,9 @@ router.get('/userInfo', checkAuth, (req, res) => {
   const { email } = req.body
   User.findOne({ email }, (err, user) => {
     if (err) {
+      res.json({
+        status: 'FAILED'
+      })
       throw err
     }
     res.json(user)
