@@ -13,7 +13,10 @@ router.get('/', checkAuth, (req, res) => {
       })
       throw err
     } else {
-      return res.json(user)
+      return res.json({
+        email: email,
+        user
+      })
     }
   })
 })
