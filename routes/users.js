@@ -18,7 +18,6 @@ router.get('/', checkAuth, (req, res) => {
         res.json({
           status: 'FAILED'
         })
-        throw err
       } else {
         return res.json(user)
       }
