@@ -19,7 +19,7 @@ router.get('/', checkAuth, (req, res) => {
 })
 
 router.put('/updateInfo', checkAuth, (req, res) => {
-  const { email } = req.params
+  const { email } = req.body
   User.findOneAndUpdate(
     { email },
     {
