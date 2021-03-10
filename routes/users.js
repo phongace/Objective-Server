@@ -2,7 +2,17 @@ const express = require('express')
 const router = express.Router()
 const { checkAuth } = require('../middleware/checkAuth')
 
-const User = require('./../models/user')
+const User = require('../models/user')
+
+router.get('/userInfo', checkAuth, (req, res) => {
+  const { id } = req.params
+  User.findOne({ _id: id }, (err, result) => {
+    if (err) {
+      throw err
+    }
+    res.render('account', { ...result })
+  })
+})
 
 router.put('/updateInfo/:id', checkAuth, (req, res) => {
   const { id } = req.params

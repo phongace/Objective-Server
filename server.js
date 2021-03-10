@@ -4,7 +4,7 @@ const morgan = require('morgan')
 const cors = require('cors')
 
 const AuthRoute = require('./routes/auth')
-const UserRoute = require('./routes/user')
+const UserRoute = require('./routes/users')
 
 const uri = process.env.MONGODB_URI
 
