@@ -7,26 +7,23 @@ const { checkAuth } = require('../middleware/checkAuth')
 const User = require('../models/user')
 
 router.get('/', checkAuth, (req, res) => {
-  let token = req.headers['authorization']
-  token = token.split(' ')[1] // Access token
-
-  jwt.verify(token, 'access', (err, user) => {
-    if (!err) {
-      const email = token.data.email
-      return email
-    }
-  })
-
-  User.findOne({ email }, (err, user) => {
-    if (err) {
-      res.json({
-        status: 'FAILED'
-      })
-      throw err
-    } else {
-      return res.json(user)
-    }
-  })
+  if (req.headers && req.headers.authorization) {
+    var decoded = jwt.verify(
+      req.headers['authorization'].split(' ')[1],
+      'access'
+    )
+    var email = decoded.email
+    User.findOne({ email }, (err, user) => {
+      if (err) {
+        res.json({
+          status: 'FAILED'
+        })
+        throw err
+      } else {
+        return res.json(user)
+      }
+    })
+  }
 })
 
 router.put('/updateInfo', checkAuth, (req, res) => {
