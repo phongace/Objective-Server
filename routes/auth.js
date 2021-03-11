@@ -116,7 +116,7 @@ router.post('/login', (req, res) => {
                 }
               )
               let refreshToken = jwt.sign(
-                { email },
+                { email, id: data._id },
                 process.env.REFRESH_TOKEN_SECRET,
                 {
                   expiresIn: '7d'
