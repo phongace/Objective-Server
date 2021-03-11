@@ -23,6 +23,7 @@ router.get('/', checkAuth, (req, res) => {
             id: user._id,
             email: user.email,
             name: user.name,
+            isNewUser: user.isNewUser,
             gender: user.gender,
             birthday: user.birthday
           }
