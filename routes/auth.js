@@ -108,13 +108,9 @@ router.post('/login', (req, res) => {
           const hashedPass = data[0].password
           bcrypt.compare(password, hashedPass).then(result => {
             if (result) {
-              let accessToken = jwt.sign(
-                { email, id: data._id },
-                process.env.ACCESS_TOKEN_SECRET,
-                {
-                  expiresIn: '1h'
-                }
-              )
+              let accessToken = jwt.sign({ email, id: data._id }, 'secret', {
+                expiresIn: '1h'
+              })
               let refreshToken = jwt.sign(
                 { email, id: data._id },
                 process.env.REFRESH_TOKEN_SECRET,
