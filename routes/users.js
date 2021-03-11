@@ -11,8 +11,8 @@ router.get('/', checkAuth, (req, res) => {
       req.headers['authorization'].split(' ')[1],
       process.env.ACCESS_TOKEN_SECRET
     )
-    var email = decoded.email
-    User.findOne({ email }, (err, user) => {
+    var id = decoded.id
+    User.findOne({ id }, (err, user) => {
       if (err) {
         res.json({
           status: 'FAILED'
@@ -39,9 +39,9 @@ router.put('/updateInfo', checkAuth, (req, res) => {
       req.headers['authorization'].split(' ')[1],
       process.env.ACCESS_TOKEN_SECRET
     )
-    var email = decoded.email
+    var id = decoded.id
     User.findOneAndUpdate(
-      { email },
+      { id },
       {
         $set: req.body
       },
@@ -67,8 +67,8 @@ router.delete('/', checkAuth, (req, res) => {
       req.headers['authorization'].split(' ')[1],
       process.env.ACCESS_TOKEN_SECRET
     )
-    var email = decoded.email
-    User.deleteOne({ email }, (err, result) => {
+    var id = decoded.id
+    User.deleteOne({ id }, (err, result) => {
       if (err) {
         res.send(err.message)
       } else {
