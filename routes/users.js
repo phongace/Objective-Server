@@ -46,14 +46,21 @@ router.put('/updateInfo', checkAuth, (req, res) => {
         $set: req.body
       },
       { new: true },
-      (err, result) => {
+      (err, user) => {
         if (err) {
           res.send(err.message)
         } else {
           return res.json({
             status: 'SUCCESS',
             message: 'Update successful',
-            data: result
+            data: {
+              id: user._id,
+              email: user.email,
+              name: user.name,
+              isNewUser: user.isNewUser,
+              gender: user.gender,
+              birthday: user.birthday
+            }
           })
         }
       }
