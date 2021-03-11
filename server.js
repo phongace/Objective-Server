@@ -8,13 +8,10 @@ require('dotenv').config()
 const AuthRoute = require('./routes/auth')
 const UserRoute = require('./routes/users')
 
-mongoose.connect(
-  'mongodb+srv://alexnguyen:phonghoang98@cluster0.pomxs.mongodb.net/ObjectiveDB',
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
-)
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
 
 const app = express()
 
@@ -25,9 +22,7 @@ app.use(express.json())
 const PORT = process.env.PORT || 3000
 
 app.listen(PORT, () => {
-  console.log(
-    `Server is running on port ${PORT}, ${process.env.ACCESS_TOKEN_SECRET}`
-  )
+  console.log(`Server is running on port ${PORT}`)
 })
 
 app.use('/api', AuthRoute)
