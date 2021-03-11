@@ -12,7 +12,7 @@ router.get('/', checkAuth, (req, res) => {
       process.env.ACCESS_TOKEN_SECRET
     )
     var id = decoded.id
-    User.findOne({ id }, (err, user) => {
+    User.findOne({ _id: id }, (err, user) => {
       if (err) {
         res.json({
           status: 'FAILED'
