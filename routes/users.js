@@ -41,7 +41,7 @@ router.put('/updateInfo', checkAuth, (req, res) => {
     )
     var id = decoded.id
     User.findOneAndUpdate(
-      { id },
+      { _id: id },
       {
         $set: req.body
       },
@@ -68,7 +68,7 @@ router.delete('/', checkAuth, (req, res) => {
       process.env.ACCESS_TOKEN_SECRET
     )
     var id = decoded.id
-    User.deleteOne({ id }, (err, result) => {
+    User.deleteOne({ _id: id }, (err, result) => {
       if (err) {
         res.send(err.message)
       } else {
