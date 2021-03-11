@@ -9,7 +9,7 @@ router.get('/', checkAuth, (req, res) => {
   if (req.headers && req.headers.authorization) {
     var decoded = jwt.verify(
       req.headers['authorization'].split(' ')[1],
-      'access'
+      process.env.ACCESS_TOKEN_SECRET
     )
     var email = decoded.email
     User.findOne({ email }, (err, user) => {
@@ -18,7 +18,15 @@ router.get('/', checkAuth, (req, res) => {
           status: 'FAILED'
         })
       } else {
-        return res.json({ data: user })
+        return res.json({
+          data: {
+            id: user._id,
+            email: user.email,
+            name: user.name,
+            gender: user.gender,
+            birthday: user.birthday
+          }
+        })
       }
     })
   }
@@ -28,7 +36,7 @@ router.put('/updateInfo', checkAuth, (req, res) => {
   if (req.headers && req.headers.authorization) {
     var decoded = jwt.verify(
       req.headers['authorization'].split(' ')[1],
-      'access'
+      process.env.ACCESS_TOKEN_SECRET
     )
     var email = decoded.email
     User.findOneAndUpdate(
@@ -56,7 +64,7 @@ router.delete('/', checkAuth, (req, res) => {
   if (req.headers && req.headers.authorization) {
     var decoded = jwt.verify(
       req.headers['authorization'].split(' ')[1],
-      'access'
+      process.env.ACCESS_TOKEN_SECRET
     )
     var email = decoded.email
     User.deleteOne({ email }, (err, result) => {

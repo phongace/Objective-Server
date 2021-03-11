@@ -108,12 +108,20 @@ router.post('/login', (req, res) => {
           const hashedPass = data[0].password
           bcrypt.compare(password, hashedPass).then(result => {
             if (result) {
-              let accessToken = jwt.sign({ email: email }, 'access', {
-                expiresIn: '1h'
-              })
-              let refreshToken = jwt.sign({ email: email }, 'refresh', {
-                expiresIn: '7d'
-              })
+              let accessToken = jwt.sign(
+                { email },
+                process.env.ACCESS_TOKEN_SECRET,
+                {
+                  expiresIn: '1h'
+                }
+              )
+              let refreshToken = jwt.sign(
+                { email },
+                process.env.REFRESH_TOKEN_SECRET,
+                {
+                  expiresIn: '7d'
+                }
+              )
               res.json({
                 status: 'SUCCESS',
                 message: 'Login successful',

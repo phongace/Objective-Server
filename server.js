@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
@@ -5,8 +6,6 @@ const cors = require('cors')
 
 const AuthRoute = require('./routes/auth')
 const UserRoute = require('./routes/users')
-
-const uri = process.env.MONGODB_URI
 
 mongoose.connect(
   'mongodb+srv://alexnguyen:phonghoang98@cluster0.pomxs.mongodb.net/ObjectiveDB',
@@ -24,9 +23,9 @@ app.use(express.json())
 
 const PORT = process.env.PORT || 3000
 
-app.use('/api', AuthRoute)
-app.use('/api/user', UserRoute)
-
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
 })
+
+app.use('/api', AuthRoute)
+app.use('/api/user', UserRoute)
