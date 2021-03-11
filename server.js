@@ -8,10 +8,13 @@ require('dotenv').config()
 const AuthRoute = require('./routes/auth')
 const UserRoute = require('./routes/users')
 
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.connect(
+  'mongodb+srv://alexnguyen:phonghoang98@cluster0.pomxs.mongodb.net/ObjectiveDB',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }
+)
 
 const app = express()
 
