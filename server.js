@@ -1,8 +1,9 @@
-require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 const cors = require('cors')
+
+require('dotenv').config()
 
 const AuthRoute = require('./routes/auth')
 const UserRoute = require('./routes/users')
@@ -24,7 +25,9 @@ app.use(express.json())
 const PORT = process.env.PORT || 3000
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
+  console.log(
+    `Server is running on port ${PORT}, ${process.env.ACCESS_TOKEN_SECRET}`
+  )
 })
 
 app.use('/api', AuthRoute)
