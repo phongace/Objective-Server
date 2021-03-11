@@ -1,6 +1,5 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
-const { token } = require('morgan')
 const router = express.Router()
 const { checkAuth } = require('../middleware/checkAuth')
 
@@ -19,7 +18,7 @@ router.get('/', checkAuth, (req, res) => {
           status: 'FAILED'
         })
       } else {
-        return res.json(user)
+        return res.json({ data: user })
       }
     })
   }
