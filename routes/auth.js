@@ -54,7 +54,7 @@ router.post('/register', (req, res) => {
               const newUser = new User({
                 email,
                 password: hashedPass,
-                isNewUser: false
+                isNewUser: true
               })
 
               newUser
