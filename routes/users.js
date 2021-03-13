@@ -68,6 +68,42 @@ router.put('/updateInfo', checkAuth, (req, res) => {
   }
 })
 
+router.put('/updateName', checkAuth, (req, res) => {
+  if (req.headers && req.headers.authorization) {
+    var decoded = jwt.verify(
+      req.headers['authorization'].split(' ')[1],
+      process.env.ACCESS_TOKEN_SECRET
+    )
+    var id = decoded.id
+    User.findOneAndUpdate(
+      { _id: id },
+      {
+        name: req.body.name,
+        isNewUser: false
+      },
+      { new: true },
+      (err, user) => {
+        if (err) {
+          res.send(err.message)
+        } else {
+          return res.json({
+            status: 'SUCCESS',
+            message: 'Update successful',
+            data: {
+              id: user._id,
+              email: user.email,
+              name: user.name,
+              isNewUser: user.isNewUser,
+              gender: user.gender,
+              birthday: user.birthday
+            }
+          })
+        }
+      }
+    )
+  }
+})
+
 router.delete('/', checkAuth, (req, res) => {
   if (req.headers && req.headers.authorization) {
     var decoded = jwt.verify(
