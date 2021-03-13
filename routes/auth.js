@@ -112,14 +112,14 @@ router.post('/login', (req, res) => {
                 { email, id: data[0]._id },
                 process.env.ACCESS_TOKEN_SECRET,
                 {
-                  expiresIn: '1h'
+                  expiresIn: '7h'
                 }
               )
               let refreshToken = jwt.sign(
                 { email, id: data[0]._id },
                 process.env.REFRESH_TOKEN_SECRET,
                 {
-                  expiresIn: '7d'
+                  expiresIn: '30d'
                 }
               )
               res.json({
