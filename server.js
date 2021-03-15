@@ -7,6 +7,7 @@ require('dotenv').config()
 
 const AuthRoute = require('./routes/auth')
 const UserRoute = require('./routes/users')
+const TargetRoute = require('./routes/target-api')
 
 mongoose.connect(
   'mongodb+srv://alexnguyen:phonghoang98@cluster0.pomxs.mongodb.net/ObjectiveDB',
@@ -30,3 +31,4 @@ app.listen(PORT, () => {
 
 app.use('/api', AuthRoute)
 app.use('/api/user', UserRoute)
+app.use('/api/target', TargetRoute)
