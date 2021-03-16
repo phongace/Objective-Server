@@ -19,6 +19,6 @@ const TargetSchema = new mongoose.Schema(
   }
 )
 
-const Target = mongoose.model('Target', TargetSchema)
+const Target = mongoose.model('Targets', TargetSchema)
 
 module.exports = Target
