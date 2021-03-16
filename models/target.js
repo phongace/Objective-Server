@@ -1,19 +1,17 @@
 const mongoose = require('mongoose')
 const AutoIncrement = require('mongoose-sequence')(mongoose)
 
-mongoose.set('useFindAndModify', false)
-mongoose.set('useCreateIndex', true)
-
 const TargetSchema = new mongoose.Schema(
   {
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    id: Number,
     title: { type: String, required: true },
     description: String,
     time: String,
     isDone: Boolean,
     subTask: [
       {
-        // idSubTask: { type: Number, min: 1, unique: true },
+        idSubTask: { type: Number, min: 1, unique: true },
         content: { type: String, required: true }
       }
     ]
