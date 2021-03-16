@@ -41,7 +41,7 @@ router.post('/', checkAuth, (req, res) => {
       })
     } else {
       const target = new Target()
-      target.id = autoIncrement('targetId')
+      target._id = autoIncrement('targetId')
       target.userId = userId
       target.title = title
       target.description = description
