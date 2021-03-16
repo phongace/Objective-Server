@@ -6,7 +6,7 @@ const Target = require('../models/target')
 
 function getSequenceNextValue(seqName) {
   var seqDoc = Target.findOneAndUpdate({
-    query: { _id: seqName },
+    query: { id: seqName },
     update: { $inc: { seqValue: 1 } },
     new: true
   })
@@ -25,7 +25,7 @@ router.post('/', checkAuth, (req, res) => {
       process.env.ACCESS_TOKEN_SECRET
     )
     var userId = decoded.id
-    if (title === '' || description === '' || time === '') {
+    if (title === '' || time === '') {
       res.json({
         status: 'FAILED',
         message: 'Empty input fields!'
