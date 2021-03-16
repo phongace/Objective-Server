@@ -14,13 +14,13 @@ const TargetSchema = new mongoose.Schema(
         content: { type: String, required: true }
       }
     ]
-  },
-  {
-    timestamps: true
   }
+  // {
+  //   timestamps: true
+  // }
 )
 
 TargetSchema.plugin(AutoIncrement, { id: 'target_seq', inc_field: 'id' })
-
 const Target = mongoose.model('Target', TargetSchema)
+
 module.exports = Target
