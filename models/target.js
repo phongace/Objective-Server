@@ -11,7 +11,6 @@ const TargetSchema = new mongoose.Schema(
     isDone: Boolean,
     subTask: [
       {
-        idSubTask: { type: Number, unique: true },
         content: String
       }
     ]
