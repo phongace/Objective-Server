@@ -38,10 +38,10 @@ router.post('/', checkAuth, (req, res) => {
       target.description = description
       target.time = time
       target.isDone = false
-      target.subTask = [
-        (target.subTask[0].idSubTask = getSequenceNextValue('subTaskId')),
-        (target.subTask[0].content = contentSubTask)
-      ]
+      // target.subTask = [
+      //   (target.subTask[0].idSubTask = getSequenceNextValue('subTaskId')),
+      //   (target.subTask[0].content = contentSubTask)
+      // ]
       target
         .save()
         .then(result => {
