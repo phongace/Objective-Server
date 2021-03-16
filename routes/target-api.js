@@ -5,7 +5,7 @@ const { checkAuth } = require('../middleware/checkAuth')
 const Target = require('../models/target')
 
 router.post('/', checkAuth, (req, res) => {
-  var { title, description, time, contentSubTask } = req.body
+  let { title, description, time } = req.body
   title = title.trim()
   description = description.trim()
   time = time.trim()
@@ -22,31 +22,20 @@ router.post('/', checkAuth, (req, res) => {
         message: 'Empty input fields!'
       })
     } else {
-      const target = new Target()
-      target.userId = userId
-      target.title = title
-      target.description = description
-      target.time = time
-      target.isDone = false
-      // target.subTask = [
-      //   (target.subTask[0].idSubTask = getSequenceNextValue('subTaskId')),
-      //   (target.subTask[0].content = contentSubTask)
-      // ]
+      const target = new Target({
+        userId,
+        title,
+        description,
+        time,
+        isDone: false
+      })
       target
         .save()
         .then(result => {
           res.json({
             status: 'SUCCESS',
             message: 'Target created!',
-            data: {
-              id: result._id,
-              userId: result.userId,
-              title: result.title,
-              description: result.description,
-              time: result.time,
-              isDone: result.isDone,
-              subTask: result.subTask
-            }
+            data: result
           })
         })
         .catch(error => {
