@@ -23,6 +23,7 @@ router.post('/', checkAuth, (req, res) => {
       })
     } else {
       const target = new Target({
+        _id: 'dasdsdasd',
         userId,
         title,
         description,
