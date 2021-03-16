@@ -16,10 +16,10 @@ const TargetSchema = new mongoose.Schema(
       }
     ]
   },
-  { _id: false },
   {
     timestamps: true
-  }
+  },
+  { _id: false }
 )
 
 TargetSchema.plugin(AutoIncrement)
