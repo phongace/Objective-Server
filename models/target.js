@@ -9,7 +9,8 @@ const TargetSchema = new mongoose.Schema(
     isDone: Boolean,
     subTask: [
       {
-        content: String
+        idSubTask: { type: Number, unique: true },
+        content: { type: String, required: true }
       }
     ]
   },
