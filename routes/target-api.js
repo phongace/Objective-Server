@@ -4,12 +4,21 @@ const jwt = require('jsonwebtoken')
 const { checkAuth } = require('../middleware/checkAuth')
 const Target = require('../models/target')
 
-function getSequenceNextValue(seqName) {
-  var seqDoc = Target.findOneAndUpdate({
-    query: { id: seqName },
-    update: { $inc: { seqValue: 1 } },
-    new: true
-  })
+function autoIncrement(seqName) {
+  var seqDoc = Target.findOneAndUpdate(
+    {
+      id: seqName
+    },
+    {
+      $inc: {
+        seqValue: 1
+      }
+    },
+    {
+      upsert: true,
+      new: true
+    }
+  )
   return seqDoc.seqValue
 }
 
@@ -32,7 +41,7 @@ router.post('/', checkAuth, (req, res) => {
       })
     } else {
       const target = new Target()
-      target.id = getSequenceNextValue('targetId')
+      target.id = autoIncrement('targetId')
       target.userId = userId
       target.title = title
       target.description = description
