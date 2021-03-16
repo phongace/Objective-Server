@@ -7,7 +7,7 @@ const Target = require('../models/target')
 function autoIncrement(seqName) {
   var seqDoc = Target.findOneAndUpdate(
     {
-      id: seqName
+      _id: seqName
     },
     {
       $inc: {
