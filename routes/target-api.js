@@ -41,7 +41,7 @@ router.post('/', checkAuth, (req, res) => {
       })
     } else {
       const target = new Target()
-      target._id = autoIncrement('targetId')
+      // target._id = autoIncrement('targetId')
       target.userId = userId
       target.title = title
       target.description = description
@@ -58,7 +58,7 @@ router.post('/', checkAuth, (req, res) => {
             status: 'SUCCESS',
             message: 'Target created!',
             data: {
-              id: result.id,
+              id: autoIncrement('targetId'),
               userId: result.userId,
               title: result.title,
               description: result.description,
