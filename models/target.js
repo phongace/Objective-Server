@@ -5,14 +5,14 @@ const TargetSchema = new mongoose.Schema(
   {
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     id: Number,
-    title: { type: String, required: true },
+    title: String,
     description: String,
     time: String,
     isDone: Boolean,
     subTask: [
       {
-        idSubTask: { type: Number, min: 1, unique: true },
-        content: { type: String, required: true }
+        idSubTask: { type: Number, unique: true },
+        content: String
       }
     ]
   },
@@ -21,7 +21,7 @@ const TargetSchema = new mongoose.Schema(
   }
 )
 
-TargetSchema.plugin(AutoIncrement, { id: 'target_seq', inc_field: 'id' })
+TargetSchema.plugin(AutoIncrement, { inc_field: 'id' })
 const Target = mongoose.model('Target', TargetSchema)
 
 module.exports = Target
