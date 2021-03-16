@@ -23,7 +23,6 @@ router.post('/', checkAuth, (req, res) => {
       })
     } else {
       const target = new Target()
-      target.id = 1
       target.userId = userId
       target.title = title
       target.description = description
@@ -32,7 +31,19 @@ router.post('/', checkAuth, (req, res) => {
       target
         .save()
         .then(result => {
-          res.json({ status: 'SUCCESS', message: 'Target created!', result })
+          res.json({
+            status: 'SUCCESS',
+            message: 'Target created!',
+            data: {
+              _id: result._id,
+              userId: result.userId,
+              title: result.title,
+              description: result.description,
+              time: result.time,
+              isDone: result.isDone,
+              subTask: result.subTask
+            }
+          })
         })
         .catch(error => {
           res.json({
