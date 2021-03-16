@@ -13,8 +13,6 @@ router.post('/', checkAuth, (req, res) => {
     var userId = decoded.id
 
     var { title, description, time } = req.body
-    title = title.trim()
-    time = time.trim()
 
     if (title === '' || time === '') {
       res.json({
