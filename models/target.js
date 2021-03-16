@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const TargetSchema = new mongoose.Schema(
   {
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    _id: String,
     title: String,
     description: String,
     time: String,

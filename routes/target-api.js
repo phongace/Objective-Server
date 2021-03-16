@@ -23,8 +23,7 @@ router.post('/', checkAuth, (req, res) => {
       })
     } else {
       const target = new Target({
-        _id: 'rerere',
-        userId: `${userId}${Date.now()}`,
+        userId,
         title,
         description,
         time,
@@ -37,7 +36,7 @@ router.post('/', checkAuth, (req, res) => {
             status: 'SUCCESS',
             message: 'Target created!',
             data: {
-              _id: result._id,
+              id: result._id,
               userId: result.userId,
               title: result.title,
               description: result.description,
