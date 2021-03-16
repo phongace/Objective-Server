@@ -44,8 +44,8 @@ router.post('/', checkAuth, (req, res) => {
               title: result.title,
               description: result.description,
               time: result.time,
-              isDone: result.isDone,
-              subTask: result.subTask
+              isDone: result.isDone
+              // subTask: result.subTask
             }
           })
         })
