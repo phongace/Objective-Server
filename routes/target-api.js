@@ -42,3 +42,5 @@ router.post('/', checkAuth, (req, res) => {
     }
   }
 })
+
+module.exports = router
