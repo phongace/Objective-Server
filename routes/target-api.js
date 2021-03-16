@@ -36,7 +36,7 @@ router.post('/', checkAuth, (req, res) => {
             status: 'SUCCESS',
             message: 'Target created!',
             data: {
-              id: result._id,
+              _id: result._id,
               userId: result.userId,
               title: result.title,
               description: result.description,
