@@ -20,7 +20,7 @@ const TargetSchema = new mongoose.Schema(
   }
 )
 
-TargetSchema.plugin(AutoIncrement, { inc_field: 'id' })
+TargetSchema.plugin(AutoIncrement, { id: 'target_seq', inc_field: 'id' })
 
 const Target = mongoose.model('Target', TargetSchema)
 module.exports = Target
