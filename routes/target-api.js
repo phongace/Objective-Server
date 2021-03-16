@@ -38,7 +38,15 @@ router.post('/', checkAuth, (req, res) => {
           res.json({
             status: 'SUCCESS',
             message: 'Target created!',
-            data: result
+            data: {
+              id: result._id,
+              userId: result.userId,
+              title: result.title,
+              description: result.description,
+              time: result.time,
+              isDone: result.isDone,
+              subTask: result.subTask
+            }
           })
         })
         .catch(error => {
