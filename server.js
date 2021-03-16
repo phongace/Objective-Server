@@ -16,8 +16,6 @@ mongoose.connect(
     useUnifiedTopology: true
   }
 )
-// mongoose.set('useFindAndModify', false)
-// mongoose.set('useCreateIndex', true)
 
 const app = express()
 
