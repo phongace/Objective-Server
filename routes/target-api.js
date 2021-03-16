@@ -4,24 +4,6 @@ const jwt = require('jsonwebtoken')
 const { checkAuth } = require('../middleware/checkAuth')
 const Target = require('../models/target')
 
-function autoIncrement(seqName) {
-  var seqDoc = Target.findOneAndUpdate(
-    {
-      _id: seqName
-    },
-    {
-      $inc: {
-        seqValue: 1
-      }
-    },
-    {
-      upsert: true,
-      new: true
-    }
-  )
-  return seqDoc.seqValue
-}
-
 router.post('/', checkAuth, (req, res) => {
   var { title, description, time, contentSubTask } = req.body
   title = title.trim()
@@ -41,7 +23,6 @@ router.post('/', checkAuth, (req, res) => {
       })
     } else {
       const target = new Target()
-      // target._id = autoIncrement('targetId')
       target.userId = userId
       target.title = title
       target.description = description
@@ -58,7 +39,7 @@ router.post('/', checkAuth, (req, res) => {
             status: 'SUCCESS',
             message: 'Target created!',
             data: {
-              id: autoIncrement('targetId'),
+              id: result._id,
               userId: result.userId,
               title: result.title,
               description: result.description,
@@ -69,7 +50,7 @@ router.post('/', checkAuth, (req, res) => {
           })
         })
         .catch(error => {
-          res.json({
+          res.status(500).json({
             status: 'FAILED',
             error
           })

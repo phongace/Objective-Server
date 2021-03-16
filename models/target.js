@@ -1,9 +1,10 @@
 const mongoose = require('mongoose')
+const AutoIncrement = require('mongoose-sequence')(mongoose)
 
 const TargetSchema = new mongoose.Schema(
   {
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    // _id: { type: Number, min: 1, unique: true },
+    _id: Number,
     title: { type: String, required: true },
     description: String,
     time: String,
@@ -15,10 +16,13 @@ const TargetSchema = new mongoose.Schema(
       }
     ]
   },
+  { _id: false },
   {
     timestamps: true
   }
 )
+
+TargetSchema.plugin(AutoIncrement)
 
 const Target = mongoose.model('Target', TargetSchema)
 module.exports = Target
