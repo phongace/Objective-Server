@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const jwt = require('jsonwebtoken')
 const { checkAuth } = require('../middleware/checkAuth')
 const Target = require('../models/target')
 

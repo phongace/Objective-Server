@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const TargetSchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     id: { type: Number, min: 1, unique: true },
     title: { type: String, required: true },
     description: String,
