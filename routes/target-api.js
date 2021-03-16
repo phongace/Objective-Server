@@ -47,9 +47,9 @@ router.post('/', checkAuth, (req, res) => {
           })
         })
         .catch(error => {
+          console.log(error)
           res.json({
-            status: 'FAILED',
-            error
+            status: 'FAILED'
           })
         })
     }
