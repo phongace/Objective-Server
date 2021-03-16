@@ -5,7 +5,7 @@ const { checkAuth } = require('../middleware/checkAuth')
 const Target = require('../models/target')
 
 function getSequenceNextValue(seqName) {
-  var seqDoc = Target.findAndModify({
+  var seqDoc = Target.findOneAndUpdate({
     query: { _id: seqName },
     update: { $inc: { seqValue: 1 } },
     new: true
