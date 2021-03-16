@@ -10,14 +10,14 @@ const TargetSchema = new mongoose.Schema(
     isDone: Boolean,
     subTask: [
       {
-        idSubTask: { type: Number, min: 1, unique: true },
+        // idSubTask: { type: Number, min: 1, unique: true },
         content: { type: String, required: true }
       }
     ]
+  },
+  {
+    timestamps: true
   }
-  // {
-  //   timestamps: true
-  // }
 )
 
 TargetSchema.plugin(AutoIncrement, { id: 'target_seq', inc_field: 'id' })
