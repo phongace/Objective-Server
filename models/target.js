@@ -8,10 +8,10 @@ const TargetSchema = new mongoose.Schema(
     time: String,
     isDone: Boolean,
     subTask: [
-      {
-        idSubTask: { type: Number, unique: true },
-        content: { type: String, required: true }
-      }
+      // {
+      //   idSubTask: { type: Number, unique: true },
+      //   content: { type: String, required: true }
+      // }
     ]
   },
   {
