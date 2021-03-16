@@ -5,17 +5,18 @@ const { checkAuth } = require('../middleware/checkAuth')
 const Target = require('../models/target')
 
 router.post('/', checkAuth, (req, res) => {
-  let { title, description, time } = req.body
-  title = title.trim()
-  description = description.trim()
-  time = time.trim()
-
   if (req.headers && req.headers.authorization) {
     var decoded = jwt.verify(
       req.headers['authorization'].split(' ')[1],
       process.env.ACCESS_TOKEN_SECRET
     )
     var userId = decoded.id
+
+    let { title, description, time } = req.body
+    title = title.trim()
+    description = description.trim()
+    time = time.trim()
+
     if (title === '' || time === '') {
       res.json({
         status: 'FAILED',
