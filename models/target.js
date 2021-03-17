@@ -7,6 +7,7 @@ const TargetSchema = new mongoose.Schema(
     description: String,
     time: String,
     isDone: Boolean,
+    isPriority: Boolean,
     subTask: [
       // {
       //   idSubTask: { type: Number, unique: true },

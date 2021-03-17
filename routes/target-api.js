@@ -27,7 +27,8 @@ router.post('/', checkAuth, (req, res) => {
         title,
         description,
         time,
-        isDone: false
+        isDone: false,
+        isPriority: false
       })
       target
         .save()
@@ -42,6 +43,7 @@ router.post('/', checkAuth, (req, res) => {
               description: result.description,
               time: result.time,
               isDone: result.isDone,
+              isPriority: result.isPriority,
               subTask: result.subTask
             }
           })
