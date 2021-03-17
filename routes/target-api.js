@@ -56,4 +56,26 @@ router.post('/', checkAuth, (req, res) => {
   }
 })
 
+router.get('/', checkAuth, (req, res) => {
+  if (req.headers && req.headers.authorization) {
+    var decoded = jwt.verify(
+      req.headers['authorization'].split(' ')[1],
+      process.env.ACCESS_TOKEN_SECRET
+    )
+    var userId = decoded.id
+    Target.find({ userId }, (err, result) => {
+      if (err) {
+        res.json({
+          status: 'FAILED'
+        })
+      } else {
+        return res.json({
+          status: 'SUCESS',
+          data: result
+        })
+      }
+    })
+  }
+})
+
 module.exports = router
