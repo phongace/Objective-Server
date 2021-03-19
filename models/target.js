@@ -5,7 +5,7 @@ const TargetSchema = new mongoose.Schema(
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     title: String,
     description: String,
-    time: String,
+    time: ['Ngày', 'Tuần', 'Tháng', 'Năm'],
     isDone: Boolean,
     isPriority: Boolean,
     subTask: [
