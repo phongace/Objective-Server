@@ -12,11 +12,10 @@ router.post('/', checkAuth, (req, res) => {
     )
     var userId = decoded.id
 
-    var { title, description, time } = req.body
+    var { title, description, time, isPriority } = req.body
     title = title.trim()
-    time = time.trim()
 
-    if (title === '' || time === '') {
+    if (title === '') {
       res.json({
         status: 'FAILED',
         message: 'Empty input fields!'
@@ -28,7 +27,7 @@ router.post('/', checkAuth, (req, res) => {
         description,
         time,
         isDone: false,
-        isPriority: false
+        isPriority
       })
       target
         .save()
