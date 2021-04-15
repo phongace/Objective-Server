@@ -62,7 +62,7 @@ router.post('/register', (req, res) => {
                 .then(result => {
                   res.json({
                     status: 'SUCCESS',
-                    message: 'Register sucessful',
+                    message: 'Register successful',
                     data: result
                   })
                 })
