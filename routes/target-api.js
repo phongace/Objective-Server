@@ -72,14 +72,15 @@ router.get('/', checkAuth, (req, res) => {
       } else {
         return res.json({
           status: 'SUCCESS',
-          data: {
-            title: result.title,
-            description: result.description,
-            time: result.time,
-            isDone: result.isDone,
-            isPriority: result.isPriority,
-            subTask: result.subTask
-          }
+          data: result
+          // data: {
+          //   title: result.title,
+          //   description: result.description,
+          //   time: result.time,
+          //   isDone: result.isDone,
+          //   isPriority: result.isPriority,
+          //   subTask: result.subTask
+          // }
         })
       }
     })
